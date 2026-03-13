@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flower in Glass</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(circle at center, rgba(20, 30, 70, 0.15), transparent 35%),
+        #000;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .scene {
+      position: relative;
+      width: 500px;
+      height: 700px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* soft glow behind dome */
+    .scene::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(112, 146, 255, 0.22), transparent 70%);
+      top: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(10px);
+    }
+
+    .glass-wrap {
+      position: relative;
+      width: 170px;
+      height: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .glass {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 235px;
+      border-radius: 65px 65px 18px 18px;
+      background: linear-gradient(
+        to bottom,
+        rgba(83, 110, 210, 0.45),
+        rgba(40, 65, 150, 0.55)
+      );
+      box-shadow:
+        inset 0 0 18px rgba(167, 194, 255, 0.18),
+        0 0 18px rgba(91, 124, 255, 0.12);
+      border: 2px solid rgba(72, 101, 220, 0.35);
+      overflow: hidden;
+    }
+
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 14px;
+      border: 3px solid rgba(72, 101, 220, 0.7);
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .shine {
+      position: absolute;
+      right: 14px;
+      top: 58px;
+      width: 8px;
+      height: 72px;
+      background: rgba(255, 255, 255, 0.28);
+      border-radius: 10px;
+      filter: blur(0.5px);
+    }
+
+    .shine::after {
+      content: "";
+      position: absolute;
+      top: 84px;
+      left: 1px;
+      width: 6px;
+      height: 16px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+
+    .base {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 165px;
+      height: 12px;
+      background: #c96243;
+      border-radius: 1px;
+      box-shadow: 0 0 2px rgba(255, 120, 80, 0.2);
+    }
+
+    .flower {
+      position: absolute;
+      bottom: 49px;
+      left: 50%;
+      width: 90px;
+      height: 180px;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .swing {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 90px;
+      height: 170px;
+      transform-origin: bottom center;
+      animation: sway 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes sway {
+      0% {
+        transform: translateX(-50%) rotate(-5deg);
+      }
+      100% {
+        transform: translateX(-50%) rotate(5deg);
+      }
+    }
+
+    .stem {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 5px;
+      height: 92px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, #1f7a34, #165b24);
+      border-radius: 10px;
+    }
+
+    .leaf {
+      position: absolute;
+      background: linear-gradient(to bottom right, #2c9b43, #1e6f31);
+      border-radius: 100% 0 100% 0;
+      box-shadow: inset 0 0 4px rgba(255,255,255,0.08);
+    }
+
+    .leaf.left {
+      width: 26px;
+      height: 34px;
+      left: 18px;
+      bottom: 50px;
+      transform: rotate(-38deg);
+    }
+
+    .leaf.right {
+      width: 24px;
+      height: 30px;
+      right: 18px;
+      bottom: 66px;
+      transform: rotate(38deg) scaleX(-1);
+    }
+
+    .rose {
+      position: absolute;
+      left: 50%;
+      top: 5px;
+      width: 78px;
+      height: 78px;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 0 8px rgba(255, 120, 120, 0.4));
+    }
+
+    .petal {
+      position: absolute;
+      background: linear-gradient(to bottom, #ff9aa0, #df6f73);
+      border-radius: 60% 60% 55% 55%;
+    }
+
+    .petal.center {
+      width: 28px;
+      height: 36px;
+      left: 25px;
+      top: 18px;
+      z-index: 5;
+      border-radius: 45% 45% 55% 55%;
+    }
+
+    .petal.left1 {
+      width: 30px;
+      height: 38px;
+      left: 10px;
+      top: 18px;
+      transform: rotate(-28deg);
+      z-index: 4;
+    }
+
+    .petal.right1 {
+      width: 30px;
+      height: 38px;
+      right: 10px;
+      top: 18px;
+      transform: rotate(28deg);
+      z-index: 4;
+    }
+
+    .petal.left2 {
+      width: 28px;
+      height: 30px;
+      left: 6px;
+      top: 28px;
+      transform: rotate(-48deg);
+      z-index: 3;
+      opacity: 0.92;
+    }
+
+    .petal.right2 {
+      width: 28px;
+      height: 30px;
+      right: 6px;
+      top: 28px;
+      transform: rotate(48deg);
+      z-index: 3;
+      opacity: 0.92;
+    }
+
+    .petal.bottom {
+      width: 40px;
+      height: 24px;
+      left: 19px;
+      top: 40px;
+      border-radius: 50%;
+      z-index: 2;
+      opacity: 0.95;
+    }
+
+    .glow {
+      position: absolute;
+      left: 50%;
+      top: 26px;
+      transform: translateX(-50%);
+      width: 88px;
+      height: 88px;
+      background: radial-gradient(circle, rgba(255, 160, 180, 0.28), transparent 65%);
+      border-radius: 50%;
+      z-index: 1;
+      filter: blur(6px);
+    }
+
+    .fallen-petal {
+      position: absolute;
+      bottom: 10px;
+      background: linear-gradient(to bottom, #d86a5d, #b24f46);
+      border-radius: 100% 0 100% 0;
+      opacity: 0.98;
+    }
+
+    .fallen-petal.one {
+      width: 34px;
+      height: 20px;
+      left: 18px;
+      transform: rotate(20deg);
+    }
+
+    .fallen-petal.two {
+      width: 16px;
+      height: 10px;
+      left: 58px;
+      bottom: 8px;
+      transform: rotate(-10deg);
+    }
+
+    .inner-floor {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="glass-wrap">
+      <div class="glass">
+        <div class="shine"></div>
+
+        <div class="flower">
+          <div class="swing">
+            <div class="glow"></div>
+
+            <div class="rose">
+              <div class="petal left2"></div>
+              <div class="petal right2"></div>
+              <div class="petal left1"></div>
+              <div class="petal right1"></div>
+              <div class="petal center"></div>
+              <div class="petal bottom"></div>
+            </div>
+
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+          </div>
+        </div>
+
+        <div class="inner-floor">
+          <div class="fallen-petal one"></div>
+          <div class="fallen-petal two"></div>
+        </div>
+      </div>
+
+      <div class="base"></div>
+    </div>
+  </div>
+</body>
+</html>
